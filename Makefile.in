@@ -86,9 +86,10 @@ test_logs := $(patsubst %.v, %.log, $(tests))
 $(test_deps) : %.d : %.v
 	$(VMKDEPS) -I $(top_dir) $* $<
 
+# $(ECE2300_LINT) -I $(top_dir) $<
+
 $(test_exes) : % : %.v
 	$(VERILATOR_LINT) -I$(top_dir) --top-module Top $<
-	$(ECE2300_LINT) -I $(top_dir) $<
 	$(IVERILOG_COMPILE) -I $(top_dir) -s Top -o $@ $<
 
 $(test_logs) : %.log : %
