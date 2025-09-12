@@ -7,8 +7,8 @@
 // ECE 2300 unit testing library for lab assignments.
 //
 
-`ifndef ECE2300_STDLIB_V
-`define ECE2300_STDLIB_V
+`ifndef ECE2300_TEST_V
+`define ECE2300_TEST_V
 
 //------------------------------------------------------------------------
 // Colors
@@ -20,14 +20,13 @@
 `define ECE2300_RESET  "\033[0m"
 
 //========================================================================
-// ece2300_TestUtils
+// CombinationalTestUtils
 //========================================================================
 
-module ece2300_TestUtils
-(
-  output logic clk,
-  output logic reset
-);
+module CombinationalTestUtils();
+
+  logic clk;
+  logic rst;
 
   // verilator lint_off BLKSEQ
   initial clk = 1'b1;
@@ -68,7 +67,7 @@ module ece2300_TestUtils
 
   always @( posedge clk ) begin
 
-    if ( reset )
+    if ( rst )
       cycles <= 0;
     else
       cycles <= cycles + 1;
@@ -115,9 +114,16 @@ module ece2300_TestUtils
     seed = 32'hdeadbeef;
     failed = 0;
 
-    reset = 1;
+    rst = 1;
     #30;
-    reset = 0;
+    rst = 0;
+  endtask
+
+  //----------------------------------------------------------------------
+  // test_case_end
+  //----------------------------------------------------------------------
+
+  task test_case_end();
   endtask
 
 endmodule
@@ -126,13 +132,12 @@ endmodule
 // ECE2300_CHECK_EQ
 //------------------------------------------------------------------------
 // Compare two expressions which can be signals or constants. We use the
-// XOR operator so that an X in __ref will match 0, 1, or X in __dut, but
-// an X in __dut will only match an X in __ref.
+// !== operator so that Xs must also match exactly.
 
 `define ECE2300_CHECK_EQ( __dut, __ref )                                \
-  if ( __ref !== ( __ref ^ __dut ^ __ref ) ) begin                      \
+  if ( __ref !== __dut ) begin                                          \
     if ( t.n != 0 )                                                     \
-      $display( {"\n",`ECE2300_RED,"ERROR",`ECE2300_RESET," (cycle=%0d): %s != %s (%x != %x)"},\
+      $display( {"\n",`ECE2300_RED,"ERROR",`ECE2300_RESET," (cycle=%0d): %s != %s (%b != %b)"},\
                 t.cycles, "__dut", "__ref", __dut, __ref );             \
     else                                                                \
       $write( {`ECE2300_RED,"FAILED",`ECE2300_RESET} );                 \
@@ -144,5 +149,5 @@ endmodule
   end                                                                   \
   if (1)
 
-`endif /* ECE2300_STDLIB */
+`endif /* ECE2300_TEST_V */
 

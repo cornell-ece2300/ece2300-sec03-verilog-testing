@@ -2,8 +2,10 @@
 // PairTripleDetector_GL-test
 //========================================================================
 
-`include "ece2300-test.v"
-`include "PairTripleDetector_GL.v"
+`include "ece2300/ece2300-test.v"
+
+// ece2300-lint
+`include "sec03/PairTripleDetector_GL.v"
 
 module Top();
 
@@ -11,28 +13,23 @@ module Top();
   // Setup
   //----------------------------------------------------------------------
 
-  // verilator lint_off UNUSED
-  logic clk;
-  logic reset;
-  // verilator lint_on UNUSED
-
-  ece2300_TestUtils t( .* );
+  CombinationalTestUtils t();
 
   //----------------------------------------------------------------------
   // Instantiate design under test
   //----------------------------------------------------------------------
 
-  logic dut_in0;
-  logic dut_in1;
-  logic dut_in2;
-  logic dut_out;
+  logic in0;
+  logic in1;
+  logic in2;
+  logic out;
 
   PairTripleDetector_GL dut
   (
-    .in0 (dut_in0),
-    .in1 (dut_in1),
-    .in2 (dut_in2),
-    .out (dut_out)
+    .in0 (in0),
+    .in1 (in1),
+    .in2 (in2),
+    .out (out)
   );
 
   //----------------------------------------------------------------------
@@ -44,24 +41,23 @@ module Top();
 
   task check
   (
-    input logic in0,
-    input logic in1,
-    input logic in2,
-    input logic out
+    input logic in0_,
+    input logic in1_,
+    input logic in2_,
+    input logic out_
   );
     if ( !t.failed ) begin
 
-      dut_in0 = in0;
-      dut_in1 = in1;
-      dut_in2 = in2;
+      in0 = in0_;
+      in1 = in1_;
+      in2 = in2_;
 
       #8;
 
       if ( t.n != 0 )
-        $display( "%3d: %b %b %b > %b", t.cycles,
-                  dut_in0, dut_in1, dut_in2, dut_out );
+        $display( "%3d: %b %b %b > %b", t.cycles, in0, in1, in2, out );
 
-      `ECE2300_CHECK_EQ( dut_out, out );
+      `ECE2300_CHECK_EQ( out, out_ );
 
       #2;
 
@@ -75,11 +71,13 @@ module Top();
   task test_case_1_basic();
     t.test_case_begin( "test_case_1_basic" );
 
+    //     in0 in1 in2 out
     check( 0, 0, 0, 0 );
     check( 0, 1, 1, 1 );
     check( 0, 1, 0, 0 );
     check( 1, 1, 1, 1 );
 
+    t.test_case_end();
   endtask
 
   //----------------------------------------------------------------------
@@ -89,16 +87,18 @@ module Top();
   task test_case_2_exhaustive();
     t.test_case_begin( "test_case_2_exhaustive" );
 
-    check( 0, 0, 0, 0 );
-    check( 0, 0, 1, 0 );
-    check( 0, 1, 0, 0 );
-    check( 0, 1, 1, 1 );
+    //     in0 in1 in2 out
+    check( 0,  0,  0,  0 );
+    check( 0,  0,  1,  0 );
+    check( 0,  1,  0,  0 );
+    check( 0,  1,  1,  1 );
 
-    check( 1, 0, 0, 0 );
-    check( 1, 0, 1, 1 );
-    check( 1, 1, 0, 1 );
-    check( 1, 1, 1, 1 );
+    check( 1,  0,  0,  0 );
+    check( 1,  0,  1,  1 );
+    check( 1,  1,  0,  1 );
+    check( 1,  1,  1,  1 );
 
+    t.test_case_end();
   endtask
 
   //----------------------------------------------------------------------
@@ -115,3 +115,4 @@ module Top();
   end
 
 endmodule
+

@@ -4,7 +4,7 @@
 // Author : Christopher Batten (Cornell)
 // Date   : September 7, 2024
 
-`include "PairTripleDetector2_GL.v"
+`include "sec03/PairTripleDetector2_GL.v"
 
 module Top();
 
@@ -12,15 +12,15 @@ module Top();
   // Instantiate detector
   //----------------------------------------------------------------------
 
-  logic [2:0] dut_a;
-  logic [2:0] dut_b;
-  logic       dut_out;
+  logic [2:0] a;
+  logic [2:0] b;
+  logic       out;
 
   PairTripleDetector2_GL dut
   (
-    .a   (dut_a),
-    .b   (dut_b),
-    .out (dut_out)
+    .a   (a),
+    .b   (b),
+    .out (out)
   );
 
   //----------------------------------------------------------------------
@@ -31,11 +31,11 @@ module Top();
 
     // Process command line arguments
 
-    if ( !$value$plusargs( "a=%b", dut_a ) )
-      dut_a = 3'b000;
+    if ( !$value$plusargs( "a=%b", a ) )
+      a = 3'b000;
 
-    if ( !$value$plusargs( "b=%b", dut_b ) )
-      dut_b = 3'b000;
+    if ( !$value$plusargs( "b=%b", b ) )
+      b = 3'b000;
 
     // Advance time
 
@@ -44,9 +44,9 @@ module Top();
     // Display output
 
     $write( "\n" );
-    $display( "a   = %b", dut_a );
-    $display( "b   = %b", dut_b );
-    $display( "out = %b", dut_out );
+    $display( "a   = %b", a );
+    $display( "b   = %b", b );
+    $display( "out = %b", out );
     $write( "\n" );
 
     $finish;
