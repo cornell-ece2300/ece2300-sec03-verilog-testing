@@ -1,16 +1,16 @@
 #=========================================================================
-# sec03
+# ptd
 #=========================================================================
 
-sec03_srcs = \
+ptd_srcs = \
   PairTripleDetector_GL.v \
   PairTripleDetector2_GL.v \
 
-sec03_tests = \
+ptd_tests = \
   PairTripleDetector_GL-test.v \
   PairTripleDetector2_GL-test.v \
 
-sec03_sims = \
-  detector2-sim.v \
+ptd_sims = \
+  ptd-sim.v \
 
-$(eval $(call check_part,sec03))
+$(eval $(call check_part,ptd))

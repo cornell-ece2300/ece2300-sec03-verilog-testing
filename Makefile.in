@@ -27,7 +27,7 @@ default : all
 
 modules = \
   ece2300 \
-  sec03 \
+  ptd \
 
 #-------------------------------------------------------------------------
 # check helper template

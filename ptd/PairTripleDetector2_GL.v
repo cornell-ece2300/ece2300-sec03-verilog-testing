@@ -6,7 +6,7 @@
 `define PAIR_TRIPLE_DETECTOR2_GL_V
 
 `include "ece2300/ece2300-misc.v"
-`include "sec03/PairTripleDetector_GL.v"
+`include "ptd/PairTripleDetector_GL.v"
 
 module PairTripleDetector2_GL
 (

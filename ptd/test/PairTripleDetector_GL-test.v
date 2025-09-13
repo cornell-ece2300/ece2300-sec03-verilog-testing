@@ -5,7 +5,7 @@
 `include "ece2300/ece2300-test.v"
 
 // ece2300-lint
-`include "sec03/PairTripleDetector_GL.v"
+`include "ptd/PairTripleDetector_GL.v"
 
 module Top();
 
