@@ -4,7 +4,7 @@
 // Author : Christopher Batten (Cornell)
 // Date   : September 7, 2024
 
-`include "sec03/PairTripleDetector2_GL.v"
+`include "ptd/PairTripleDetector2_GL.v"
 
 module Top();
 
