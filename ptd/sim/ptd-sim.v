@@ -31,6 +31,13 @@ module Top();
 
     // Process command line arguments
 
+    if ( $test$plusargs( "help" ) ) begin
+      $display("");
+      $display(" ptd-sim +a=000 +b=000");
+      $display("");
+      $finish;
+    end
+
     if ( !$value$plusargs( "a=%b", a ) )
       a = 3'b000;
 
