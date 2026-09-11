@@ -20,31 +20,9 @@ module PairTripleDetector2_GL
   //>'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
   // remove these lines before starting your implementation
-  // `ECE2300_UNUSED( a );
-  // `ECE2300_UNUSED( b );
-  // `ECE2300_UNDRIVEN( out );
-
-  wire w0;
-
-  PairTripleDetector_GL detector0
-  (
-    .in0 (a[0]),
-    .in1 (a[1]),
-    .in2 (a[2]),
-    .out (w0)
-  );
-
-  wire w1;
-
-  PairTripleDetector_GL detector1
-  (
-    .in0 (b[0]),
-    .in1 (b[1]),
-    .in2 (b[2]),
-    .out (w1)
-  );
-
-  or (out, w0, w1);
+  `ECE2300_UNUSED( a );
+  `ECE2300_UNUSED( b );
+  `ECE2300_FLOATING( out );
 
 endmodule
 
