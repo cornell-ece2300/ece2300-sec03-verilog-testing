@@ -12,7 +12,7 @@ module PairTripleDetector2_GL
 (
   input  wire [2:0] a,
   input  wire [2:0] b,
-  output wire out
+  output wire       out
 );
 
   //''' ACTIVITY '''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -44,9 +44,9 @@ module PairTripleDetector2_GL
     .out (w1)
   );
 
-  or( out, w0, w1 );
+  or (out, w0, w1);
 
 endmodule
 
-`endif /* PAIR_TRIPLE_DETECTOR2_GL_V */
+`endif  /* PAIR_TRIPLE_DETECTOR2_GL_V */
 
