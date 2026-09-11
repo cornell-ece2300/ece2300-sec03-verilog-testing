@@ -15,10 +15,16 @@ module PairTripleDetector_GL
 
   wire w, x, y;
 
+
+  wire w, x, y;
+
   or (w, in0, in1);
-  and (x, in0, in1);
-  and (y, w, in2);
-  or (out, y, x);
+
+
+and (x, in0, in1);
+    and (y, w, in2);
+
+  or (   out, y,   x);
 
   // The following does _not_ use explicit gate-level modeling so it is
   // now allowed until later in the course!
