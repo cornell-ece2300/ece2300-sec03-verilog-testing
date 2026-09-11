@@ -3,4 +3,10 @@
 #=========================================================================
 
 ece2300_srcs = \
-  ece2300-test.v \
+  SevenSegFL.v \
+  TestReadOnlyMemory.v \
+
+# ece2300_tests = \
+#   TestReadOnlyMemory-test.v \
+
+# $(eval $(call check_part,ece2300))

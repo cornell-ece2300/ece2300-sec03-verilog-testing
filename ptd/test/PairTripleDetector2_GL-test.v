@@ -3,8 +3,6 @@
 //========================================================================
 
 `include "ece2300/ece2300-test.v"
-
-// ece2300-lint
 `include "ptd/PairTripleDetector2_GL.v"
 
 module Top();
@@ -13,7 +11,7 @@ module Top();
   // Setup
   //----------------------------------------------------------------------
 
-  CombinationalTestUtils t();
+  TestUtils t();
 
   //----------------------------------------------------------------------
   // Instantiate design under test
@@ -44,6 +42,9 @@ module Top();
     input logic       out_
   );
     if ( !t.failed ) begin
+      t.num_checks += 1;
+
+      #1;
 
       a = a_;
       b = b_;
@@ -55,7 +56,7 @@ module Top();
 
       `ECE2300_CHECK_EQ( out, out_ );
 
-      #2;
+      #1;
 
     end
   endtask
@@ -107,6 +108,8 @@ module Top();
     // Add checks for case where both inputs have only 0-1 ones
     //>'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
+    check( 3'b001, 3'b001, 0 );
+
     t.test_case_end();
   endtask
 
@@ -119,7 +122,7 @@ module Top();
   //----------------------------------------------------------------------
 
   initial begin
-    t.test_bench_begin( `__FILE__ );
+    t.test_bench_begin();
 
     if ((t.n <= 0) || (t.n == 1)) test_case_1_basic();
     if ((t.n <= 0) || (t.n == 2)) test_case_2_many_ones();
