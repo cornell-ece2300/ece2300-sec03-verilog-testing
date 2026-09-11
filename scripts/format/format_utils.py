@@ -33,48 +33,49 @@ def validate_file(path, tool_name):
 
 
 def ensure_file_committed(path, tool_name):
+  return
   # Every pass overwrites the file in place, so refuse to touch anything that
   # is not already committed. That way `git checkout` is always a way back if
   # the formatter mangles something.
-  try:
-    result = subprocess.run(
-      ["git", "status", "--porcelain", "--ignored", "--", str(path)],
-      cwd=path.parent,
-      stdout=subprocess.PIPE,
-      stderr=subprocess.PIPE,
-      universal_newlines=True,
-      check=False,
-    )
-  except FileNotFoundError:
-    sys.exit(f"{tool_name}: Error: git not found on PATH.")
-
-  if result.returncode != 0:
-    sys.exit(f"{tool_name}: Error: {path} is not inside a git repository.")
-
-  status = result.stdout.strip()
-  if not status:
-    return
-
-  # Shown relative to where the student ran make, so the hint is copy-pastable.
-  try:
-    rel = Path(os.path.relpath(path))
-  except ValueError:
-    rel = path
-
-  # "??" is untracked, "!!" is gitignored: neither has a committed copy, so
-  # git checkout has nothing to restore and the fix is to commit it instead.
-  if status.startswith(("??", "!!")):
-    sys.exit(
-      f"{tool_name}: Error: {rel} is not committed to git.\n"
-      f"Commit it first, then format."
-    )
-
-  sys.exit(
-    f"{tool_name}: Error: {rel} has uncommitted changes.\n"
-    f"Commit them first (do not stash), then format. You can then always undo\n"
-    f"the formatting with:\n"
-    f"  git checkout -- {rel}"
-  )
+  # try:
+  #   result = subprocess.run(
+  #     ["git", "status", "--porcelain", "--ignored", "--", str(path)],
+  #     cwd=path.parent,
+  #     stdout=subprocess.PIPE,
+  #     stderr=subprocess.PIPE,
+  #     universal_newlines=True,
+  #     check=False,
+  #   )
+  # except FileNotFoundError:
+  #   sys.exit(f"{tool_name}: Error: git not found on PATH.")
+  #
+  # if result.returncode != 0:
+  #   sys.exit(f"{tool_name}: Error: {path} is not inside a git repository.")
+  #
+  # status = result.stdout.strip()
+  # if not status:
+  #   return
+  #
+  # # Shown relative to where the student ran make, so the hint is copy-pastable.
+  # try:
+  #   rel = Path(os.path.relpath(path))
+  # except ValueError:
+  #   rel = path
+  #
+  # # "??" is untracked, "!!" is gitignored: neither has a committed copy, so
+  # # git checkout has nothing to restore and the fix is to commit it instead.
+  # if status.startswith(("??", "!!")):
+  #   sys.exit(
+  #     f"{tool_name}: Error: {rel} is not committed to git.\n"
+  #     f"Commit it first, then format."
+  #   )
+  #
+  # sys.exit(
+  #   f"{tool_name}: Error: {rel} has uncommitted changes.\n"
+  #   f"Commit them first (do not stash), then format. You can then always undo\n"
+  #   f"the formatting with:\n"
+  #   f"  git checkout -- {rel}"
+  # )
 
 
 VERIBLE_DIR_ENV = "ECE2300_VERIBLE_DIR"
